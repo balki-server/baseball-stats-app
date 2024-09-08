@@ -1,6 +1,7 @@
 # Baseball Stats App
 
 ## Prerequisites
+
 - Python 3.x
 - Postgres (on Mac, brew install postgresql)
 - Node.js
@@ -13,17 +14,20 @@
    python3 -m venv venv
    source venv/bin/activate
 
-2. Install requirements:
+1. Install requirements:
+   ```bash
    pip3 install -r backend/requirements.txt
 
 ## Start Services
 
 1. Start DB & backend service:
+   ```bash
    brew services start postgresql
    cd backend
    python app.py
 
-4. Start frontend service:
+1. Start frontend service:
+   ```bash
    cd frontend
    npm install
    npm start
