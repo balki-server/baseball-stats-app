@@ -27,13 +27,16 @@ def get_players():
         db_player = get_player_from_db(playernum)
         if db_player:
             players.append(db_player)
+            #print(f"Player {player['Player']} inserted into players object")  # Debugging log  
         else:
-            if 'Rank' not in player:
+            if player['Rank'] == "":
                 # Calculate rank based on Hits compared to other players
                 hits_in_year = [p['Hits'] for p in api_data if p['Year'] == player['Year']]
                 player['Rank'] = sum(p['Hits'] > player['Hits'] for p in api_data if p['Year'] == player['Year'])
+            #add_player()
+            insert_player(player)
             players.append(player)
-
+    print(f"Player {players}")
     return jsonify(players)
 
 # API endpoint to update player data
@@ -41,7 +44,7 @@ def get_players():
 def edit_player(id):
     data = request.json
     update_player(id, data)
-    return jsonify({'status': 'success'})
+    return jsonify({'status': 'Player updated'})
 
 if __name__ == "__main__":
     app.run(debug=True)
