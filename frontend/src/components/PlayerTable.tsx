@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 
-// Define the Player type
+// Define the Player interface
 interface Player {
   id: number;
   Player: string;
@@ -12,26 +11,13 @@ interface Player {
   Bats: string;
 }
 
-// Define the props type
 interface PlayerTableProps {
+  players: Player[];  // Accept players as a prop
   onPlayerSelect: (player: Player) => void;
-  onEditPlayer: (player: Player) => void;  // New prop for editing
+  onEditPlayer: (player: Player) => void;
 }
 
-const PlayerTable: React.FC<PlayerTableProps> = ({ onPlayerSelect, onEditPlayer }) => {
-  const [players, setPlayers] = useState<Player[]>([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:5000/players')
-      .then((response) => {
-        console.log('Player data received:', response.data);
-        setPlayers(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching player data:', error);
-      });
-  }, []);
-
+const PlayerTable: React.FC<PlayerTableProps> = ({ players, onPlayerSelect, onEditPlayer }) => {
   return (
     <table className="player-table">
       <thead>
@@ -42,16 +28,12 @@ const PlayerTable: React.FC<PlayerTableProps> = ({ onPlayerSelect, onEditPlayer 
           <th>Year</th>
           <th>Rank</th>
           <th>Bats</th>
-          <th>Edit</th> {/* New column for Edit button */}
+          <th>Edit</th>
         </tr>
       </thead>
       <tbody>
         {players.map((player, index) => (
-          <tr
-            key={player.id}
-            className={index % 2 === 0 ? 'even' : 'odd'}
-            onClick={() => onPlayerSelect(player)}
-          >
+          <tr key={player.id} onClick={() => onPlayerSelect(player)}>
             <td>{player.Player}</td>
             <td>{player.Hits}</td>
             <td>{player.AgeThatYear}</td>
@@ -60,7 +42,6 @@ const PlayerTable: React.FC<PlayerTableProps> = ({ onPlayerSelect, onEditPlayer 
             <td>{player.Bats}</td>
             <td>
               <button onClick={(e) => { e.stopPropagation(); onEditPlayer(player); }}>Edit</button>
-              {/* Edit button triggers onEditPlayer */}
             </td>
           </tr>
         ))}
