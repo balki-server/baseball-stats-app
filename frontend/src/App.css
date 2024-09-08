@@ -1,0 +1,29 @@
+.app {
+    display: flex;
+  }
+  
+  .player-table {
+    width: 75%;
+  }
+  
+  .player-detail {
+    width: 25%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .even {
+    background-color: #f2f2f2;
+  }
+  
+  .odd {
+    background-color: #ffffff;
+  }
+  

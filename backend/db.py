@@ -1,7 +1,7 @@
 import psycopg2
 
 def init_db():
-    conn = psycopg2.connect(dbname="baseball_stats", user="postgres", password="yourpassword")
+    conn = psycopg2.connect(dbname="baseball_stats", user="barrybong", password="969696")
     cur = conn.cursor()
 
     cur.execute('''CREATE TABLE IF NOT EXISTS players (
