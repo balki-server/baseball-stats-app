@@ -18,30 +18,42 @@ interface PlayerDetailProps {
 }
 
 const PlayerDetail: React.FC<PlayerDetailProps> = ({ player }) => {
-  const [description, setDescription] = useState('');
-
-  useEffect(() => {
-    const fetchDescription = async () => {
-      // Mocking API call to fetch description (you can replace this with a real API call)
-      //const response = await axios.post('https://api.openai.com/v1/completions', {
-      //  model: 'gpt-3.5-turbo',
-      //  prompt: `Summarize the following baseball player in 5 sentences: ${player.Player}, Hits: ${player.Hits}, Age: ${player.AgeThatYear}, Year: ${player.Year}`,
-      //  temperature: 0.5,
-      //  max_tokens: 100,
-      //});
-      //setDescription(response.data.choices[0].text);
-      setDescription("ChatGPT powered info coming soon!");
-    };
-
-    fetchDescription();
-  }, [player]);
-
-  return (
-    <div className="player-detail">
-      <h2>{player.Player}</h2>
-      <p>{description}</p>
-    </div>
-  );
-};
-
-export default PlayerDetail;
+    const [description, setDescription] = useState('');
+  
+    useEffect(() => {
+      const fetchDescription = async () => {
+        try {
+          const response = await axios.post(
+            'https://api.openai.com/v1/completions',
+            {
+              model: 'gpt-3.5-turbo', // or gpt-4 depending on your access
+              prompt: `Summarize the following baseball player in 5 sentences: Name: ${player.Player}, Age: ${player.AgeThatYear}, Year: ${player.Year}`,
+              temperature: 0.7,
+              max_tokens: 100,
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`, // Make sure your key is stored securely in the environment variables
+              },
+            }
+          );
+          setDescription(response.data.choices[0].text.trim());
+        } catch (error) {
+          console.error('Error fetching player description from ChatGPT:', error);
+          setDescription('Failed to fetch description.');
+        }
+      };
+  
+      fetchDescription();
+    }, [player]);
+  
+    return (
+      <div className="player-detail">
+        <h2>{player.Player}</h2>
+        <p>LLM-powered info:{description || 'Loading description...'}</p>
+      </div>
+    );
+  };
+  
+  export default PlayerDetail;
