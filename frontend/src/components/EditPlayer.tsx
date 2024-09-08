@@ -55,7 +55,7 @@ const EditPlayer: React.FC<EditPlayerProps> = ({ player, onSave }) => {
   return (
     <div className="edit-player">
       <h2>Edit Player</h2>
-      <label>Player Name:</label>
+      <label>Player {formData.id} Name:</label>
       <input name="Player" value={formData.Player} onChange={handleChange} />
       <label>Hits:</label>
       <input name="Hits" value={formData.Hits} onChange={handleChange} />
