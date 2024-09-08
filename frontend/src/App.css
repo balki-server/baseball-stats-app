@@ -52,7 +52,6 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-top: 20px;
   }
   
   .edit-player input {
@@ -76,4 +75,5 @@
   .edit-player button:hover {
     background-color: #45a049;
   }
+  
   

@@ -15,9 +15,10 @@ interface Player {
 // Define the props type
 interface PlayerTableProps {
   onPlayerSelect: (player: Player) => void;
+  onEditPlayer: (player: Player) => void;  // New prop for editing
 }
 
-const PlayerTable: React.FC<PlayerTableProps> = ({ onPlayerSelect }) => {
+const PlayerTable: React.FC<PlayerTableProps> = ({ onPlayerSelect, onEditPlayer }) => {
   const [players, setPlayers] = useState<Player[]>([]);
 
   useEffect(() => {
@@ -41,6 +42,7 @@ const PlayerTable: React.FC<PlayerTableProps> = ({ onPlayerSelect }) => {
           <th>Year</th>
           <th>Rank</th>
           <th>Bats</th>
+          <th>Edit</th> {/* New column for Edit button */}
         </tr>
       </thead>
       <tbody>
@@ -48,11 +50,7 @@ const PlayerTable: React.FC<PlayerTableProps> = ({ onPlayerSelect }) => {
           <tr
             key={player.id}
             className={index % 2 === 0 ? 'even' : 'odd'}
-            onClick={(e) => {
-                e.stopPropagation();  // Prevent any event propagation issues
-                console.log('Row clicked:', player);  // Log click
-                onPlayerSelect(player);
-              }}
+            onClick={() => onPlayerSelect(player)}
           >
             <td>{player.Player}</td>
             <td>{player.Hits}</td>
@@ -60,6 +58,10 @@ const PlayerTable: React.FC<PlayerTableProps> = ({ onPlayerSelect }) => {
             <td>{player.Year}</td>
             <td>{player.Rank}</td>
             <td>{player.Bats}</td>
+            <td>
+              <button onClick={(e) => { e.stopPropagation(); onEditPlayer(player); }}>Edit</button>
+              {/* Edit button triggers onEditPlayer */}
+            </td>
           </tr>
         ))}
       </tbody>
