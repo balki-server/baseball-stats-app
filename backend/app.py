@@ -36,7 +36,7 @@ def get_players():
             #add_player()
             insert_player(player)
             players.append(player)
-    print(f"Player {players}")
+    #print(f"Player {players}")
     return jsonify(players)
 
 # API endpoint to update player data

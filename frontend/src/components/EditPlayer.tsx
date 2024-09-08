@@ -18,38 +18,55 @@ interface EditPlayerProps {
 }
 
 const EditPlayer: React.FC<EditPlayerProps> = ({ player, onSave }) => {
-  const [formData, setFormData] = useState<Player>({ ...player });
+    const [formData, setFormData] = useState<Player>({ ...player });
+  
+    // Update formData when the player prop changes
+    useEffect(() => {
+      console.log('Player prop changed:', player);        
+      setFormData({ ...player });
+    }, [player]);
+  
+    // Update formData when input fields change
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      console.log('Input changed:', name, value); // Log changes for debugging      
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,  // Update the specific field in the form data
+      }));
+    };
+  
+    const handleSubmit = () => {
+        // Log the URL and data being sent for debugging
+        console.log('Submitting form data:', formData);
+      
+        // Make sure the player ID is appended to the URL correctly
+        // axios.put(`/players/${player.id}`, formData)
+        axios.put(`http://localhost:5000/players/${player.id}`, formData)
+          .then(() => {
+            onSave(formData); // Call onSave to update the parent component state after saving
+          })
+          .catch((error) => {
+            console.error('Error updating player:', error); // Log any error for debugging
+          });
+      };
 
-  // Use useEffect to update formData whenever the player prop changes
-  useEffect(() => {
-    setFormData({ ...player }); // Update formData with the new player data
-  }, [player]); // Re-run this effect whenever the player prop changes
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = () => {
-    axios.put(`/players/${player.id}`, formData).then(() => {
-      onSave(formData); // Save changes after successful API call
-    });
-  };
 
   return (
     <div className="edit-player">
       <h2>Edit Player</h2>
       <label>Player Name:</label>
-      <input name="player" value={formData.Player} onChange={handleChange} />
+      <input name="Player" value={formData.Player} onChange={handleChange} />
       <label>Hits:</label>
-      <input name="hits" value={formData.Hits} onChange={handleChange} />
+      <input name="Hits" value={formData.Hits} onChange={handleChange} />
       <label>Age:</label>
-      <input name="age" value={formData.AgeThatYear} onChange={handleChange} />
+      <input name="AgeThatYear" value={formData.AgeThatYear} onChange={handleChange} />
       <label>Year:</label>
-      <input name="year" value={formData.Year} onChange={handleChange} />
+      <input name="Year" value={formData.Year} onChange={handleChange} />
       <label>Rank:</label>
-      <input name="rank" value={formData.Rank} onChange={handleChange} />
+      <input name="Rank" value={formData.Rank} onChange={handleChange} />
       <label>Bats:</label>
-      <input name="bats" value={formData.Bats} onChange={handleChange} />
+      <input name="Bats" value={formData.Bats} onChange={handleChange} />
       <button onClick={handleSubmit}>Save</button>
     </div>
   );

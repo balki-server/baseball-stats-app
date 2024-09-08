@@ -57,7 +57,7 @@ def update_player(player_id, data):
     conn = psycopg2.connect(dbname="baseball_stats", user="barrybong", password="969696")
     cur = conn.cursor()
     cur.execute('UPDATE players SET player = %s, hits = %s, age = %s, year = %s, rank = %s, bats = %s WHERE id = %s',
-                (data['player'], data['hits'], data['age'], data['year'], data['rank'], data['bats'], player_id))
+                (data['Player'], data['Hits'], data['AgeThatYear'], data['Year'], data['Rank'], data['Bats'], player_id))
     conn.commit()
     cur.close()
     conn.close()
