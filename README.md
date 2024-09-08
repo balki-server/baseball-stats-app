@@ -16,7 +16,9 @@
 2. Install requirements:
    pip3 install -r backend/requirements.txt
 
-3. Start DB & backend service:
+## Start Services
+
+1. Start DB & backend service:
    brew services start postgresql
    cd backend
    python app.py
