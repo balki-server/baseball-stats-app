@@ -1,0 +1,1 @@
+CREATE DATABASE baseball_stats;
