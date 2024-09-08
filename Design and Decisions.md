@@ -1,9 +1,10 @@
-# Baseball Stats App
+# Design, Decisions, and Tradeoffs
 
 ## Design
 
 - Simple 3 layered design
 - Frontend (React & Typescript)
+  - RESTful API to handle CRUD operations
 - Middleware (Python & Flask)
 - Backend (Postgres)
 - Baseball Public API

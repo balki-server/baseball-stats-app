@@ -3,9 +3,13 @@
 ## Prerequisites
 
 - Python 3.x
-- Postgres (on Mac, brew install postgresql)
+- Postgres 
+    
+    ```bash
+    brew install postgresql
 - Node.js
 - npm
+- venv
 
 ## Backend Setup
 
